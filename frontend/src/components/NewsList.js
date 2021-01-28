@@ -14,14 +14,18 @@ function NewsList() {
         })
     }, []);
 
+    
+
     return (
         <div>
             <table>
-                <tr>
-                {notices.map(notice =>(
-                    <Notice key = {notice._id} notice = {notice}></Notice>
-                ))}
-                </tr>
+                <tbody>
+                    {notices.map(notice =>(
+                        <tr >
+                            <Notice key = {notice._id} notice = {notice}></Notice>
+                        </tr>
+                    ))}
+               </tbody>
             </table>
         </div>
     )
