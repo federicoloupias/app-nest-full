@@ -1,0 +1,15 @@
+.notice {
+  overflow: hidden;
+  background-color: red;
+  border: 1px;
+  border-color: #ccc;
+  }
+  .button{
+    display: block;
+    float:right;
+  }
+  .date{
+    
+  }
+
+  

@@ -1,0 +1,10 @@
+.navBar {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #666;
+  }
+
+.titulo{
+    background-color: red;
+  }
