@@ -26,11 +26,9 @@ services:
       SERVICE_DB_HOST: mongo
       SERVICE_DB_USER: root
       SERVICE_DB_PASSWORD: root
-      MONGO_URL: db
-    expose: 
-      - "5123"  
+      MONGO_URL: db 
     ports:
-      - "5000:5000"  
+      - "5000:5000" 
     # save (persist) data and also to share data between containers
     volumes:
       - ./:/var/www/backend
@@ -40,16 +38,20 @@ services:
       - backend-network
   client:
     build: ./frontend/
-    container_name: nest-client-container
+    container_name: react-client-container
     ports:
-      - "8080:80"    
+      - "8080:80" 
+    environment:
+      REACT_APP_API_HOST: http://localhost:5000/
+    depends_on:
+      - backend  
   # Database service
   db:
     env_file: ./backend/.env
     # pull image from docker hub
     image: mongo
     # container name
-    container_name: nest-mongo-container
+    container_name: mongo-container
     # always restart the container if it stops.
     restart: always
     # database credentials, this is take value from env file
