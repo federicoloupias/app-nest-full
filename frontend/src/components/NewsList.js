@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Notice from './Notice';
 import moment from 'moment';
+import { apiService } from '../api/apiservice';
 
 function NewsList() {
 
     const [notices, setNotices] = useState([]);
 
     function getNotices(){
-        axios.get("/notice/notices")
+        apiService.get("/notice/notices")
         .then(function(response){
             const notices = response.data;
             var noticesByDate = handleNoticesByDateFirstToLast(notices);
@@ -60,7 +60,7 @@ function NewsList() {
         if(notice){
             const newNotice = notice;
             newNotice.isRemoved = true;
-            axios.put(`/notice/edit?noticeID=${newNotice._id}`, newNotice)
+            apiService.put(`/notice/edit?noticeID=${newNotice._id}`, newNotice)
             .then(function () {
                 getNotices()
             })
