@@ -1,0 +1,76 @@
+# docker compose version
+version: '3.7'
+# all the containers have to declare inside services
+services:
+  backend:
+    # application rely on database running
+    depends_on:
+      - db
+    env_file: ./backend/.env
+    # this build context will take the commands from Dockerfile
+    build: ./backend/
+    # image name
+    image: backend-nestjs
+    # container name
+    container_name: nest-backend-container
+    # always restart the container if it stops.
+    restart: always
+    # docker run -t is allow
+    tty: true
+    # working directory
+    working_dir: /app
+    # application environment
+    environment:
+      SERVICE_NAME: backend
+      SERVICE_TAGS: dev
+      SERVICE_DB_HOST: mongo
+      SERVICE_DB_USER: root
+      SERVICE_DB_PASSWORD: root
+      MONGO_URL: db
+    expose: 
+      - "5123"  
+    ports:
+      - "5000:5000"  
+    # save (persist) data and also to share data between containers
+    volumes:
+      - ./:/var/www/backend
+      - /var/www/backend/node_modules
+    # application network, each container for a service joins this network
+    networks:
+      - backend-network
+  client:
+    build: ./frontend/
+    container_name: nest-client-container
+    ports:
+      - "8080:80"    
+  # Database service
+  db:
+    env_file: ./backend/.env
+    # pull image from docker hub
+    image: mongo
+    # container name
+    container_name: nest-mongo-container
+    # always restart the container if it stops.
+    restart: always
+    # database credentials, this is take value from env file
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:     
+      - "27017:27017"   
+    # save (persist) data and also to share data between containers
+    volumes:
+      - db_data:/data/db
+    # application network, each container for a service joins this network
+    networks:
+      - backend-network
+
+#Docker Networks
+networks:
+  # All container connect in a network
+  backend-network:
+    driver: bridge
+# save (persist) data
+volumes:
+  db_data: {}
