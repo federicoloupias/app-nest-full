@@ -1,4 +1,4 @@
-import { Controller, Get, Res, HttpStatus, Param, NotFoundException, Post, Body, Put, Query, Delete } from '@nestjs/common';
+import { Controller, Get, Res, HttpStatus, Param, NotFoundException, Post, Body, Put, Query } from '@nestjs/common';
 import { NoticeService } from '../notice.service';
 import { CreateNoticeDTO } from '../dto/create-notice.dto';
 
@@ -48,18 +48,6 @@ export class NoticeController {
     return res.status(HttpStatus.OK).json({
       message: 'Notice has been successfully updated',
       notice: editedNotice,
-    });
-  }
-  // Delete a notice using ID
-  @Delete('/delete')
-  async deleteNotice(@Res() res, @Query('noticeID') noticeID) {
-    const deletedNotice = await this.noticeService.deleteNotice(noticeID);
-    if (!deletedNotice) {
-        throw new NotFoundException('Notice does not exist!');
-    }
-    return res.status(HttpStatus.OK).json({
-      message: 'Notice has been deleted!',
-      notice: deletedNotice,
     });
   }
 }

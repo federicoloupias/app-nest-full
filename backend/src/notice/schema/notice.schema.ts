@@ -10,5 +10,5 @@ export const NoticeModel = new mongoose.Schema({
     _id: String,
     isRemoved: Boolean 
 },{
-    versionKey: false // You should be aware of the outcome after set to false
+    versionKey: false
 })

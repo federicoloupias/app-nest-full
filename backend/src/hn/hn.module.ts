@@ -1,6 +1,6 @@
 import { HttpModule, Module, OnModuleInit } from '@nestjs/common';
 import { HnService } from './hn.service';
-import { HnController } from './hn.controller';
+import { HnController } from './controller/hn.controller';
 import { NoticeModule } from 'src/notice/notice.module';
 
 @Module({

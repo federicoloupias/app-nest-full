@@ -1,16 +1,13 @@
 import { HttpService, Injectable } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
 import { CreateNoticeDTO } from 'src/notice/dto/create-notice.dto';
 import { NoticeService } from 'src/notice/notice.service';
-import { HitDTO } from './dto/hit.dto';
 import { Interval } from '@nestjs/schedule';
 
 @Injectable()
 export class HnService {
   constructor(private httpService: HttpService, private noticeService: NoticeService) {}
 
-  
+  // Get All News from API hn.angolia.com
   @Interval(3600000)
   async getArticles(): Promise<void> {
     try {
@@ -38,16 +35,10 @@ export class HnService {
         };
         await this.noticeService.addNotice(newNotice);
       }
-
-      
     }
-
     } catch (error) {
       console.log(error)
     }
-   
-
-    
 
   }
 }

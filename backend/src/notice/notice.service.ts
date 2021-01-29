@@ -34,7 +34,6 @@ export class NoticeService {
   async editNotice(noticeID : string, createNoticeDTO: CreateNoticeDTO): Promise<Notice> {
     try {
       const res =  await this.noticeModel.findByIdAndUpdate(noticeID, createNoticeDTO, { new: true }).exec();
-      console.log(res);
       return res;
     } catch (error) {
       return null;
@@ -42,9 +41,4 @@ export class NoticeService {
 
   }
 
-  async deleteNotice(noticeID): Promise<any> {
-    const deletedNotice = await this.noticeModel
-      .findByIdAndRemove(noticeID);
-    return deletedNotice;
-  }
 } 
